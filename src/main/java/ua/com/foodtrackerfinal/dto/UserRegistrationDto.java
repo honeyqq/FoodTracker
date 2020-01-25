@@ -2,7 +2,7 @@ package ua.com.foodtrackerfinal.dto;
 
 import javax.validation.constraints.NotNull;
 
-public class UserDto {
+public class UserRegistrationDto {
 
     @NotNull
     private String username;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.com.foodtrackerfinal.Exception.UsernameFoundException;
-import ua.com.foodtrackerfinal.dto.UserDto;
+import ua.com.foodtrackerfinal.dto.UserRegistrationDto;
 import ua.com.foodtrackerfinal.service.RegistrationService;
 
 import javax.validation.Valid;
@@ -25,8 +25,8 @@ public class RegistrationController {
     }
 
     @ModelAttribute("user")
-    public UserDto UserDto() {
-        return new UserDto();
+    public UserRegistrationDto UserDto() {
+        return new UserRegistrationDto();
     }
 
     @GetMapping
@@ -35,14 +35,14 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String registerUser(@ModelAttribute("user") @Valid UserDto userDto, BindingResult result)
+    public String registerUser(@ModelAttribute("user") @Valid UserRegistrationDto userRegistrationDto, BindingResult result)
             throws UsernameFoundException {
 
         if (result.hasErrors()) {
             return "registration";
         }
 
-        registrationService.registerUser(userDto);
+        registrationService.registerUser(userRegistrationDto);
 
         return "redirect:/registration?success";
     }
