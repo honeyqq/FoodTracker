@@ -1,20 +1,20 @@
 package ua.com.foodtrackerfinal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ua.com.foodtrackerfinal.Exception.PasswordsException;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ua.com.foodtrackerfinal.Exception.UsernameFoundException;
 import ua.com.foodtrackerfinal.dto.UserDto;
-import ua.com.foodtrackerfinal.entity.User;
 import ua.com.foodtrackerfinal.service.RegistrationService;
-import ua.com.foodtrackerfinal.service.UserService;
+
+import javax.validation.Valid;
 
 @Controller
+@RequestMapping(value = "/registration")
 public class RegistrationController {
 
     private RegistrationService registrationService;
@@ -24,14 +24,26 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
 
-    @GetMapping("/registration")
+    @ModelAttribute("user")
+    public UserDto UserDto() {
+        return new UserDto();
+    }
+
+    @GetMapping
     public String getRegistration() {
         return "registration";
     }
 
-    @PostMapping("/registration")
-    public String registerUser(User user) throws UsernameFoundException {
-        registrationService.registerUser(user);
-        return "redirect:/login";
+    @PostMapping
+    public String registerUser(@ModelAttribute("user") @Valid UserDto userDto, BindingResult result)
+            throws UsernameFoundException {
+
+        if (result.hasErrors()) {
+            return "registration";
+        }
+
+        registrationService.registerUser(userDto);
+
+        return "redirect:/registration?success";
     }
 }

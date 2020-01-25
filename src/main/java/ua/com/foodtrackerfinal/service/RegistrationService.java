@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.foodtrackerfinal.Exception.UsernameFoundException;
-import ua.com.foodtrackerfinal.dto.RoleDto;
 import ua.com.foodtrackerfinal.dto.UserDto;
 import ua.com.foodtrackerfinal.entity.Role;
 import ua.com.foodtrackerfinal.entity.User;
 import ua.com.foodtrackerfinal.repository.UserRepository;
 
-import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -25,20 +23,19 @@ public class RegistrationService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public boolean registerUser(User user) throws UsernameFoundException {
-        Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
+    public boolean registerUser(UserDto userDto) throws UsernameFoundException {
+        Optional<User> optionalUser = userRepository.findByUsername(userDto.getUsername());
         if (optionalUser.isPresent()) {
             throw new UsernameFoundException("Account with this email already exists!");
         }
 
         User newUser = new User();
-        newUser.setUsername(user.getUsername());
-        newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        newUser.setUsername(userDto.getUsername());
+        newUser.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         newUser.setRole(new Role("USER"));
-        newUser.setHeight(user.getHeight());
-        newUser.setWeight(user.getWeight());
+        newUser.setHeight(userDto.getHeight());
+        newUser.setWeight(userDto.getWeight());
         userRepository.save(newUser);
-        System.out.println("New user was created"); //TODO delete this line
         return true;
     }
 }

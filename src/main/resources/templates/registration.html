@@ -18,39 +18,56 @@
     }
 </style>
 <div class="container">
-    <div class="row" style="margin-top:20px">
-        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-            <form>
-                <h1>Please SignUp</h1>
-                <div th:if="param.error">
-                    <div class="alert alert-danger" role="alert">
-                        Username of password is incorrect
-                    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully registered!</div>
+            </div>
+
+            <h1>Please register</h1>
+
+            <form th:action="@{/registration}" th:object="${user}" method="post">
+
+                <p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+                   th:each="error : ${#fields.errors('global')}" th:text="${error}">
+                    Validation error
+                </p>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error':''">
+                    <label for="username" class="control-label">Username</label>
+                    <input id="username" class="form-control" th:field="*{username}"/>
+                    <p class="error-message" th:each="error : ${#fields.errors('username')}" th:text="${error}">
+                        Validation error
+                    </p>
                 </div>
-                <div class="form-group">
-                    <input type="text" name="username" id="username" class="form-control input-lg"
-                           placeholder="Username"/>
-                </div>
-                <div class="form-group">
-                    <input type="password" name="password" id="password" class="form-control input-lg"
-                           placeholder="Password"/>
+                <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+                    <label for="password" class="control-label">Password</label>
+                    <input id="password" class="form-control" type="password" th:field="*{password}"/>
+                    <p class="error-message" th:each="error : ${#fields.errors('password')}" th:text="${error}">
+                        Validation error
+                    </p>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" name="height" id="height" class="form-control input-lg"
-                           placeholder="Your Height in cm"/>
+                <div class="form-group" th:classappend="${#fields.hasErrors('height')}? 'has-error' : ''">
+                    <label for="height" class="control-label">Height</label>
+                    <input id="height" class="form-control" type="text" th:field="*{height}" value=" "/>
+                    <p class="error-message" th:each="error : ${#fields.errors('height')}" th:text="${error}">
+                        Validation error
+                    </p>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" name="weight" id="weight" class="form-control input-lg"
-                           placeholder="Your Weight in kg"/>
+                <div class="form-group" th:classappend="${#fields.hasErrors('weight')}? 'has-error' : ''">
+                    <label for="weight" class="control-label">Weight</label>
+                    <input id="weight" class="form-control" type="text" th:field="*{weight}" value=" "/>
+                    <p class="error-message" th:each="error : ${#fields.errors('weight')}" th:text="${error}">
+                        Validation error
+                    </p>
                 </div>
 
-                <form class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                        <input type="submit" class="btn btn-lg btn-primary btn-block" formmethod="POST"
-                               value="Register"/>
-                    </div>
+                <form class="form-group">
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <span> Already registered? <a href="/" th:href="@{/login}">Login</a></span>
                 </form>
             </form>
         </div>
