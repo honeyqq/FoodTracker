@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="#{home.title}"></title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="/../css/index.css" th:href="@{/css/index.css}"/>
+</head>
+<body>
+<th:block th:include="/_menu"/>
+<header class="header">
+    <div class="brand-box">
+        <span class="brand" th:text="#{index.label.brandName}"></span>
+    </div>
+
+    <div class="text-box">
+        <h1 class="heading-primary">
+            <span class="heading-primary-main" th:text="#{index.label.primaryHeading}"></span>
+            <span class="heading-primary-sub" th:text="#{index.label.secondaryHeading}"></span>
+        </h1>
+        <a href="/login" th:text="#{index.button.start}" class="btn btn-white btn-animated">Let's start</a>
+    </div>
+</header>
+<th:block th:include="/_footer"/>
+</body>
+</html>

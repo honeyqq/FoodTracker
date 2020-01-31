@@ -1,49 +1,61 @@
 package ua.com.foodtrackerfinal.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import ua.com.foodtrackerfinal.Exception.UsernameFoundException;
-import ua.com.foodtrackerfinal.dto.UserRegistrationDto;
-import ua.com.foodtrackerfinal.service.RegistrationService;
+import org.springframework.web.servlet.ModelAndView;
+import ua.com.foodtrackerfinal.entity.User;
+import ua.com.foodtrackerfinal.service.UserService;
 
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping(value = "/registration")
+@Slf4j
 public class RegistrationController {
 
-    private RegistrationService registrationService;
+    private PasswordEncoder passwordEncoder;
+    private UserService userService;
 
     @Autowired
-    public RegistrationController(RegistrationService registrationService) {
-        this.registrationService = registrationService;
+    public RegistrationController(PasswordEncoder passwordEncoder, UserService userService) {
+        this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
-    @ModelAttribute("user")
-    public UserRegistrationDto UserDto() {
-        return new UserRegistrationDto();
+    @GetMapping("/signup")
+    public ModelAndView showRegistrationPage(ModelAndView modelAndView, User user) {
+        log.info("getting signup page");
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("signup");
+
+        return modelAndView;
     }
 
-    @GetMapping
-    public String getRegistration() {
-        return "registration";
-    }
-
-    @PostMapping
-    public String registerUser(@ModelAttribute("user") @Valid UserRegistrationDto userRegistrationDto, BindingResult result)
-            throws UsernameFoundException {
-
+    @PostMapping("/signup")
+    public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult result) {
+        log.info("trying to register new user");
         if (result.hasErrors()) {
-            return "registration";
+            log.error("Invalid data during registration");
+            modelAndView.addObject("failureMessage", "signup.label.error");
+            modelAndView.setViewName("signup");
+        } else {
+            try {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+                user.setHeight(user.getHeight());
+                user.setWeight(user.getWeight());
+                userService.setDefaultParams(user);
+                userService.saveOrUpdate(user);
+                modelAndView.setViewName("redirect:/login");
+            } catch (Exception e) {
+                log.error("username already exist");
+                modelAndView.addObject("failureMessage", "signup.label.alreadyRegistered");
+                modelAndView.setViewName("signup");
+            }
         }
-
-        registrationService.registerUser(userRegistrationDto);
-
-        return "redirect:/registration?success";
+        return modelAndView;
     }
 }
