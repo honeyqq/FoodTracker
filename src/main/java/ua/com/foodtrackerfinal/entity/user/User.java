@@ -1,4 +1,4 @@
-package ua.com.foodtrackerfinal.entity;
+package ua.com.foodtrackerfinal.entity.user;
 
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,7 +6,6 @@ import ua.com.foodtrackerfinal.utility.RegexContainer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Getter
@@ -35,19 +34,23 @@ public class User implements UserDetails {
     private String username;
 
     @Column(nullable = false)
-    @Size(min = 3, max = 100)
     private String password;
 
     @Column(nullable = false)
-    @Size(min=2,max = 3)
-    private String height;
+    private Float height;
 
     @Column(nullable = false)
-    @Size(min=2,max = 3)
-    private String weight;
+    private Float weight;
+
+    @Column(nullable = false)
+    private Integer age;
+
+    @Column(nullable = false)
+    private Float calories;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<Role> authorities;
+    @Column(name = "role_id")
+    private List<Roles> authorities;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;

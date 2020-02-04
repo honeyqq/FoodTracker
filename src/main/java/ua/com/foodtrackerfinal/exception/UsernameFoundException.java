@@ -1,4 +1,4 @@
-package ua.com.foodtrackerfinal.Exception;
+package ua.com.foodtrackerfinal.exception;
 
 public class UsernameFoundException extends RuntimeException {
     private String message;

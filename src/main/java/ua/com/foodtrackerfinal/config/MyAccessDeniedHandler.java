@@ -9,7 +9,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
-import ua.com.foodtrackerfinal.entity.Role;
+import ua.com.foodtrackerfinal.entity.user.Roles;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -73,11 +73,11 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
     }
 
     private boolean isUser(List<String> roles) {
-        return roles.contains(Role.USER.getAuthority());
+        return roles.contains(Roles.USER.getAuthority());
     }
 
     private boolean isAdmin(List<String> roles) {
-        return roles.contains(Role.ADMIN.getAuthority());
+        return roles.contains(Roles.ADMIN.getAuthority());
     }
 
 }

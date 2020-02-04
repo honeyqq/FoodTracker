@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.com.foodtrackerfinal.entity.Role;
-import ua.com.foodtrackerfinal.entity.User;
+import ua.com.foodtrackerfinal.entity.user.Roles;
+import ua.com.foodtrackerfinal.entity.user.User;
 import ua.com.foodtrackerfinal.repository.UserRepository;
 
 import javax.validation.constraints.NotNull;
@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> findAllUsers() { //means role.user
-        return userRepository.findByAuthoritiesContaining(Role.USER);
+        return userRepository.findByAuthoritiesContaining(Roles.USER);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class UserService implements UserDetailsService {
     }
 
     public User setDefaultParams(User user) {
-        List<Role> authorities = new ArrayList<>();
-        authorities.add(Role.USER);
+        List<Roles> authorities = new ArrayList<>();
+        authorities.add(Roles.USER);
         user.setAuthorities(authorities);
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
@@ -68,5 +68,9 @@ public class UserService implements UserDetailsService {
     public User saveOrUpdate(User user) {
         userRepository.save(user);
         return user;
+    }
+
+    public Float calculateCaloriesForPerson(User user) {
+        return (float) ((10*user.getWeight())+(6.25*user.getHeight())-(5*user.getAge())+5);
     }
 }

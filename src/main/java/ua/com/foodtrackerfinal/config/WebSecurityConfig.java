@@ -30,47 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf()
-//                    .disable()
-//                .authorizeRequests()
-//                    //Доступ только для не зарегистрированных пользователей
-//                    .antMatchers("/registration").not().fullyAuthenticated()
-//                    //Доступ только для пользователей с ролью Администратор
-//                    .antMatchers("/admin/**").hasRole("ADMIN")
-//                    .antMatchers("/news").hasRole("USER")
-//                    //Доступ разрешен всем пользователей
-//                    .antMatchers("/", "/resources/**").permitAll()
-//                //Все остальные страницы требуют аутентификации
-//                .anyRequest().authenticated()
-//                .and()
-//                    //Настройка для входа в систему
-//                    .formLogin()
-//                    .loginPage("/login")
-//                    //Перенарпавление на главную страницу после успешного входа
-//                    .defaultSuccessUrl("/")
-//                    .permitAll()
-//                .and()
-//                    .logout()
-//                    .permitAll()
-//                    .logoutSuccessUrl("/");
-
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/", "/home", "/registration", "/login", "/login/user").permitAll()
-//                .antMatchers("/admin/**").hasAnyRole("ADMIN")
-//                .antMatchers("/user/**").hasAnyRole("USER")
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .logoutSuccessUrl("/login?logout")
-//                .permitAll();
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/").permitAll();
         http.authorizeRequests().antMatchers("/login", "/registration").not().fullyAuthenticated();

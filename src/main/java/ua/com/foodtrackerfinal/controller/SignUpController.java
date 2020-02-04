@@ -8,20 +8,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ua.com.foodtrackerfinal.entity.User;
+import ua.com.foodtrackerfinal.entity.user.User;
 import ua.com.foodtrackerfinal.service.UserService;
 
 import javax.validation.Valid;
 
 @Controller
 @Slf4j
-public class RegistrationController {
+public class SignUpController {
 
     private PasswordEncoder passwordEncoder;
     private UserService userService;
 
     @Autowired
-    public RegistrationController(PasswordEncoder passwordEncoder, UserService userService) {
+    public SignUpController(PasswordEncoder passwordEncoder, UserService userService) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
     }
@@ -45,8 +45,10 @@ public class RegistrationController {
         } else {
             try {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
+                user.setAge(user.getAge());
                 user.setHeight(user.getHeight());
                 user.setWeight(user.getWeight());
+                user.setCalories(userService.calculateCaloriesForPerson(user));
                 userService.setDefaultParams(user);
                 userService.saveOrUpdate(user);
                 modelAndView.setViewName("redirect:/login");

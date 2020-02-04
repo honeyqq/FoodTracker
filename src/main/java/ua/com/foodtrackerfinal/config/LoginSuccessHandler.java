@@ -7,7 +7,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import ua.com.foodtrackerfinal.entity.Role;
+import ua.com.foodtrackerfinal.entity.user.Roles;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +62,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
      * @return
      */
     private boolean isUser(List<String> roles) {
-        return roles.contains(Role.USER.getAuthority());
+        return roles.contains(Roles.USER.getAuthority());
     }
 
     /**
@@ -72,7 +72,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
      * @return
      */
     private boolean isAdmin(List<String> roles) {
-        return roles.contains(Role.ADMIN.getAuthority());
+        return roles.contains(Roles.ADMIN.getAuthority());
     }
 
     protected RedirectStrategy getRedirectStrategy() {

@@ -1,8 +1,8 @@
-package ua.com.foodtrackerfinal.entity;
+package ua.com.foodtrackerfinal.entity.user;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public enum Role implements GrantedAuthority {
+public enum Roles implements GrantedAuthority {
     USER,
     ADMIN;
 

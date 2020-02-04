@@ -12,7 +12,7 @@ body {
             linear-gradient(to right bottom,
             rgba(255, 76, 101, 0.38),
             rgba(217, 161, 30, 0.8)),
-            url('https://www.zdorovieinfo.ru/wp-content/uploads/2018/11/shutterstock_360327563.jpg');
+            url("static/img/burger.jpg");
 
     background-size: cover;
     background-position: top;
