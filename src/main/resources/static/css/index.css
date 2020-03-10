@@ -10,9 +10,9 @@ body {
     height: 100vh;
     background-image:
             linear-gradient(to right bottom,
-            rgba(255, 76, 101, 0.38),
-            rgba(217, 161, 30, 0.8)),
-            url("static/img/burger.jpg");
+            rgba(9, 0, 255, 0.38),
+            rgba(0, 217, 217, 0.8));            
+            /*url(static/img/burger.jpg);*/
 
     background-size: cover;
     background-position: top;

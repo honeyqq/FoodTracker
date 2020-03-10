@@ -7,6 +7,8 @@ import ua.com.foodtrackerfinal.entity.user.User;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+//TODO передумать и переделать
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

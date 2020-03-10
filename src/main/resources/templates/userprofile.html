@@ -36,19 +36,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!--                <tr th:if="${user.isEmpty()}">-->
-                <!--                    <td colspan="8" th:text="#{userprofile.label.noUsers}"></td>-->
-                <!--                </tr>-->
+
+                                <tr th:if="${user.isEmpty()}">
+                                    <td colspan="8" th:text="#{userprofile.label.noUsers}"></td>
+                                </tr>
+
                 <tr th:each="user : ${user}">
 <!--                    <td><span th:text="${user.username}"> Username </span></td>-->
 <!--                    <td><span th:text="${user.nameUA}"> Name UA</span></td>-->
 <!--                    <td><span th:text="${user.nameEN}"> Name EN </span></td>-->
                     <td><span></span>
-<!--                        th:text="${#temporals.format(user.registrationDate,'dd-MM-yyyy')}"> Registration Date </span>-->
+
+                        th:text="${#temporals.format(user.registrationDate,'dd-MM-yyyy')}"> Registration Date </span>
+
                     </td>
                     <td>
                         <a th:text="#{differentpages.label.view}"></a>
-<!--                           th:href="@{/admin/concreteuserstatistic(id=${user.id})}">View</a>-->
+
+                           th:href="@{/admin/concreteuserstatistic(id=${user.id})}">View</a>
+
                     </td>
                 </tr>
                 </tbody>

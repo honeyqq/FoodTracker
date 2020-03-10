@@ -1,6 +1,7 @@
 package ua.com.foodtrackerfinal.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/foodlist") //TODO 2 params
-    public ModelAndView foodListPage(ModelAndView modelAndView, @RequestParam Integer page) {
+    public ModelAndView foodListPage(@NotNull ModelAndView modelAndView, @RequestParam Integer page) {
         log.info("getting foodList page number " + page);
         Pageable pageable = PageRequest.of(page - 1, NUMBER_OF_DISHES_ON_PAGE);
         modelAndView.addObject("dishes", foodService.findAll(pageable));
@@ -45,8 +46,8 @@ public class UserController {
     }
 
     @GetMapping("/userprofile")
-    public ModelAndView getProfile(ModelAndView modelAndView, User user) {
-        log.error("===> user profile");
+    public ModelAndView getProfile(@NotNull ModelAndView modelAndView, @NotNull User user) {
+        log.info("===> user profile");
         modelAndView.addObject("user", userService.findUserById(user.getId()));
         modelAndView.setViewName("userprofile");
         return modelAndView;
